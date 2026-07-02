@@ -45,6 +45,7 @@ def main():
             print("Enter xp for quest:")
             try:
                 xp = int(input())
+                xp = min(xp, 40)
             except ValueError:
                 print("xp must be a whole number")
                 continue
