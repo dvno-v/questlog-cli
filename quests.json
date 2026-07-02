@@ -1,0 +1,14 @@
+{
+    "overall_xp": 0,
+    "level": 1,
+    "quests": [
+        {
+            "id": 123123,
+            "name": "do homework",
+            "xp": 40,
+            "has_to_be_completed_before": "2025-03-03",
+            "failed": true,
+            "completed": false
+        }
+    ]
+}
