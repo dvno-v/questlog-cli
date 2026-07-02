@@ -18,6 +18,7 @@ INITIAL_BOOTSTRAP = {
     "quests": {}
 }
 QUEST_FILE = "quests.json"
+INSTRUCTIONS = "program accepts only - add, complete {id}, abandon {id}, list-complete, list-pending, list-failed, level, end\n"
 
 def main():
     contents = INITIAL_BOOTSTRAP
@@ -33,12 +34,12 @@ def main():
                 print(f"{QUEST_FILE} is corrupted or invalid, starting fresh")
                 contents = INITIAL_BOOTSTRAP
 
-    while inpt := input("program accepts only - add, complete {id}, list-complete, list-pending, list-failed, level, end\n"):
+    while inpt := input(INSTRUCTIONS):
         if inpt == "end":
             print(contents)
             return
         elif inpt == "help":
-            print("program accepts only - add, complete {id}, list-complete, list-pending, list-failed, level, end\n")
+            print(INSTRUCTIONS)
         elif inpt == "add":
             print("Enter name:")
             name = input()
@@ -155,7 +156,7 @@ def main():
             write_contents_to_file(QUEST_FILE, contents)
 
         else:
-            print("program accepts only - add, complete {id}, list-complete, list-pending, list-failed, level, end\n")
+            print(INSTRUCTIONS)
 
 
 def write_contents_to_file(file_path, contents):
