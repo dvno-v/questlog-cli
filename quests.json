@@ -1,30 +1,35 @@
 {
     "overall_xp": 0,
     "level": 1,
-    "quests": [
-        {
-            "id": 123123,
+    "quests": {
+        "123123": {
             "name": "do homework",
             "xp": 40,
             "has_to_be_completed_before": "2025-03-03",
             "failed": true,
             "completed": false
         },
-        {
+        "d8200beb-8b2a-4554-9cca-0bbe1f287f7b": {
             "name": "1",
             "xp": 1,
             "has_to_be_completed_before": "2030-1-1",
             "failed": false,
             "complete": false,
-            "id": "d8200beb-8b2a-4554-9cca-0bbe1f287f7b"
+            "id": ""
         },
-        {
+        "55a1f577-ad48-4198-9a38-d20673629cfd": {
             "name": "1",
             "xp": 1,
             "has_to_be_completed_before": "2030-11-11T00:00:00",
             "failed": false,
-            "complete": false,
-            "id": "55a1f577-ad48-4198-9a38-d20673629cfd"
+            "complete": false
+        },
+        "60f62b5a-37bf-4619-b229-cba8b32e8811": {
+            "name": "a",
+            "xp": 1,
+            "has_to_be_completed_before": "2030-01-01T00:00:00",
+            "failed": false,
+            "complete": false
         }
-    ]
+    }
 }

@@ -21,7 +21,6 @@ INITIAL_BOOTSTRAP = {
 QUEST_FILE = "quests.json"
 
 def main():
-    file_obj = None
     contents = {}
     
     try:
@@ -31,12 +30,12 @@ def main():
         with open(QUEST_FILE) as file:
             contents = json.load(file)
     
-    while inpt := input():
+    while inpt := input("program accepts only - add, complete {id}, list-complete, list-pending, list-failed, level, end\n"):
         if inpt == "end":
             print(contents)
             return
         elif inpt == "help":
-            print("program accepts only - add, complete {id}, list-complete, list-pending, list-failed, level, end")
+            print("program accepts only - add, complete {id}, list-complete, list-pending, list-failed, level, end\n")
         elif inpt == "add":
             print("Enter name:")
             name = input()
@@ -53,16 +52,15 @@ def main():
                 "xp": xp,
                 "has_to_be_completed_before": date.isoformat(),
                 "failed": False,
-                "complete": False,
-                "id": str(uuid.uuid4())
+                "complete": False
             }
-            contents["quests"].append(quest)
+            contents["quests"][str(uuid.uuid4())] = quest
             with open(QUEST_FILE, 'w') as file:
                 json.dump(contents, file, indent=4)
             
       
         else:
-            print("program accepts only - add, complete {id}, list-complete, list-pending, list-failed, level, end")
+            print("program accepts only - add, complete {id}, list-complete, list-pending, list-failed, level, end\n")
 
     
 main()
