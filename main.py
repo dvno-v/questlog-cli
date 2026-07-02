@@ -60,6 +60,32 @@ def main():
             completed_ids = [x for x in contents["quests"] if contents["quests"][x]["complete"]]
             for id in completed_ids:
                 print(contents["quests"][id])
+        elif inpt == "list-failed":
+            failed_ids = [x for x in contents["quests"] if contents["quests"][x]["failed"]]
+            for id in failed_ids:
+                print(contents["quests"][id])
+        elif inpt == "list-pending":
+            pending_ids = []
+            expired = False
+            for x in contents["quests"]:
+                quest = contents["quests"][x]
+                if quest["complete"] or quest["failed"]:
+                    continue
+                if parse(quest["has_to_be_completed_before"]) < datetime.datetime.now():
+                    quest["failed"] = True
+                    expired = True
+                else:
+                    pending_ids.append(x)
+
+            if expired:
+                write_contents_to_file(QUEST_FILE, contents)
+
+            for id in pending_ids:
+                print(contents["quests"][id])
+        
+        elif inpt == "level":
+            print(f"Level: {contents["level"]}\nOverall XP: {contents["overall_xp"]}")
+
         elif "complete" in inpt:
             splitted = inpt.split()
             quest_id = splitted[1]
