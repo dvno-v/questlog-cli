@@ -56,22 +56,30 @@ def main():
             }
             contents["quests"][str(uuid.uuid4())] = quest
             write_contents_to_file(QUEST_FILE, contents)
+        elif inpt == "list-complete":
+            completed_ids = [x for x in contents["quests"] if contents["quests"][x]["complete"]]
+            for id in completed_ids:
+                print(contents["quests"][id])
         elif "complete" in inpt:
             splitted = inpt.split()
-            uuid = splitted[1]
-            
-            if contents["quests"][uuid]["complete"]:
+            quest_id = splitted[1]
+
+            if quest_id not in contents["quests"]:
+                print("quest not found")
+                continue
+
+            if contents["quests"][quest_id]["complete"]:
                 print("quest already completed")
                 continue
             
-            if parse(contents["quests"][uuid]["has_to_be_completed_before"]) < datetime.datetime.now():
+            if parse(contents["quests"][quest_id]["has_to_be_completed_before"]) < datetime.datetime.now():
                 print("cannot complete quests, date has expired")
-                contents["quests"][uuid]["complete"] = False
-                contents["quests"][uuid]["failed"] = True
+                contents["quests"][quest_id]["complete"] = False
+                contents["quests"][quest_id]["failed"] = True
             
             else:
-                contents["quests"][uuid]["complete"] = True
-                contents["overall_xp"] += contents["quests"][uuid]["xp"]
+                contents["quests"][quest_id]["complete"] = True
+                contents["overall_xp"] += contents["quests"][quest_id]["xp"]
                 contents["level"] = max(contents["overall_xp"] // 100, 1)
                 
             write_contents_to_file(QUEST_FILE, contents)
