@@ -13,17 +13,23 @@ import datetime
 #     "complete": False
 # }
 
-def main():
-    file_path = "quests.json"
+INITIAL_BOOTSTRAP = {
+    "overall_xp": 0,
+    "level": 1,
+    "quests": []
+}
+QUEST_FILE = "quests.json"
 
+def main():
+    file_obj = None
     contents = {}
     
     try:
-        with open(file_path, 'x') as file:
-            json.dump([], file, indent=4)
+        with open(QUEST_FILE, 'x') as file:
+            json.dump(INITIAL_BOOTSTRAP, file, indent=4)
     except FileExistsError:
-        with open(file_path) as file:
-            contents = json.load(file) 
+        with open(QUEST_FILE) as file:
+            contents = json.load(file)
     
     while inpt := input():
         if inpt == "end":
@@ -45,12 +51,16 @@ def main():
             quest = {
                 "name": name,
                 "xp": xp,
-                "has_to_be_completed_before": date,
+                "has_to_be_completed_before": date.isoformat(),
                 "failed": False,
                 "complete": False,
                 "id": str(uuid.uuid4())
             }
-            print(quest)
+            contents["quests"].append(quest)
+            with open(QUEST_FILE, 'w') as file:
+                json.dump(contents, file, indent=4)
+            
+      
         else:
             print("program accepts only - add, complete {id}, list-complete, list-pending, list-failed, level, end")
 
