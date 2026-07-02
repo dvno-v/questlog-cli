@@ -16,12 +16,12 @@ import datetime
 INITIAL_BOOTSTRAP = {
     "overall_xp": 0,
     "level": 1,
-    "quests": []
+    "quests": {}
 }
 QUEST_FILE = "quests.json"
 
 def main():
-    contents = {}
+    contents = INITIAL_BOOTSTRAP
     
     try:
         with open(QUEST_FILE, 'x') as file:
@@ -55,12 +55,33 @@ def main():
                 "complete": False
             }
             contents["quests"][str(uuid.uuid4())] = quest
-            with open(QUEST_FILE, 'w') as file:
-                json.dump(contents, file, indent=4)
+            write_contents_to_file(QUEST_FILE, contents)
+        elif "complete" in inpt:
+            splitted = inpt.split()
+            uuid = splitted[1]
             
-      
+            if contents["quests"][uuid]["complete"]:
+                print("quest already completed")
+                continue
+            
+            if parse(contents["quests"][uuid]["has_to_be_completed_before"]) < datetime.datetime.now():
+                print("cannot complete quests, date has expired")
+                contents["quests"][uuid]["complete"] = False
+                contents["quests"][uuid]["failed"] = True
+            
+            else:
+                contents["quests"][uuid]["complete"] = True
+                contents["overall_xp"] += contents["quests"][uuid]["xp"]
+                contents["level"] = max(contents["overall_xp"] // 100, 1)
+                
+            write_contents_to_file(QUEST_FILE, contents)
+        
         else:
             print("program accepts only - add, complete {id}, list-complete, list-pending, list-failed, level, end\n")
 
+    
+def write_contents_to_file(file_path, contents):
+    with open(file_path, 'w') as file:
+        json.dump(contents, file, indent=4)
     
 main()

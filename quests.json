@@ -1,5 +1,5 @@
 {
-    "overall_xp": 0,
+    "overall_xp": 3000,
     "level": 1,
     "quests": {
         "123123": {
@@ -11,10 +11,10 @@
         },
         "d8200beb-8b2a-4554-9cca-0bbe1f287f7b": {
             "name": "1",
-            "xp": 1,
+            "xp": 3000,
             "has_to_be_completed_before": "2030-1-1",
             "failed": false,
-            "complete": false,
+            "complete": true,
             "id": ""
         },
         "55a1f577-ad48-4198-9a38-d20673629cfd": {
