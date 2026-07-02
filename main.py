@@ -98,9 +98,9 @@ def main():
         elif inpt == "level":
             print(f"Level: {contents["level"]}\nOverall XP: {contents["overall_xp"]}")
 
-        elif "complete" in inpt:
+        elif inpt.split() and inpt.split()[0] == "complete":
             splitted = inpt.split()
-            if len(splitted) < 2:
+            if len(splitted) != 2:
                 print("usage: complete {id}")
                 continue
             quest_id = splitted[1]
@@ -122,6 +122,35 @@ def main():
                 contents["quests"][quest_id]["complete"] = True
                 contents["overall_xp"] += contents["quests"][quest_id]["xp"]
                 contents["level"] = max(contents["overall_xp"] // 100, 1)
+
+            write_contents_to_file(QUEST_FILE, contents)
+            
+        elif inpt.split() and inpt.split()[0] == "abandon":
+            splitted = inpt.split()
+            if len(splitted) != 2:
+                print("usage: abandon {id}")
+                continue
+            quest_id = splitted[1]
+
+            if quest_id not in contents["quests"]:
+                print("quest not found")
+                continue
+
+            if contents["quests"][quest_id]["complete"]:
+                print("quest already completed")
+                continue
+
+            if contents["quests"][quest_id]["failed"]:
+                print("quest already failed")
+                continue
+            
+            if parse(contents["quests"][quest_id]["has_to_be_completed_before"]) < datetime.datetime.now():
+                print("cannot abandon quest, date has expired, thus failed")
+                contents["quests"][quest_id]["complete"] = False
+                contents["quests"][quest_id]["failed"] = True
+
+            else:
+                del contents["quests"][quest_id]
 
             write_contents_to_file(QUEST_FILE, contents)
 

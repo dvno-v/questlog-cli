@@ -17,6 +17,7 @@ Data is stored in `quests.json` in the working directory (created automatically 
 ### Commands
 - `add` — prompts for a name, xp value, and a future due date, then saves a new quest
 - `complete {id}` — marks the quest with that id as complete and awards its xp (or marks it failed if the due date has passed)
+- `abandon {id}` — deletes a pending quest (or marks it failed instead of deleting, if the due date has already passed)
 - `list-pending` — lists quests that are neither complete nor failed; any with a due date in the past are marked failed
 - `list-complete` — lists completed quests
 - `list-failed` — lists failed quests
