@@ -38,8 +38,10 @@ def main():
         if inpt == "end":
             print(contents)
             return
+        
         elif inpt == "help":
             print(INSTRUCTIONS)
+        
         elif inpt == "add":
             print("Enter name:")
             name = input()
@@ -69,14 +71,17 @@ def main():
             }
             contents["quests"][str(uuid.uuid4())] = quest
             write_contents_to_file(QUEST_FILE, contents)
+        
         elif inpt == "list-complete":
             completed_ids = [x for x in contents["quests"] if contents["quests"][x]["complete"]]
             for id in completed_ids:
                 print(contents["quests"][id])
+        
         elif inpt == "list-failed":
             failed_ids = [x for x in contents["quests"] if contents["quests"][x]["failed"]]
             for id in failed_ids:
                 print(contents["quests"][id])
+        
         elif inpt == "list-pending":
             pending_ids = []
             expired = False
