@@ -36,7 +36,8 @@ def main():
 
     while inpt := input(INSTRUCTIONS):
         if inpt == "end":
-            print(contents)
+            for id in contents["quests"]:
+                print_quest(id, contents["quests"][id])
             return
         
         elif inpt == "help":
@@ -75,13 +76,13 @@ def main():
         elif inpt == "list-complete":
             completed_ids = [x for x in contents["quests"] if contents["quests"][x]["complete"]]
             for id in completed_ids:
-                print(contents["quests"][id])
-        
+                print_quest(id, contents["quests"][id])
+                
         elif inpt == "list-failed":
             failed_ids = [x for x in contents["quests"] if contents["quests"][x]["failed"]]
             for id in failed_ids:
-                print(contents["quests"][id])
-        
+                print_quest(id, contents["quests"][id])
+                
         elif inpt == "list-pending":
             pending_ids = []
             expired = False
@@ -99,7 +100,7 @@ def main():
                 write_contents_to_file(QUEST_FILE, contents)
 
             for id in pending_ids:
-                print(contents["quests"][id])
+                print_quest(id, contents["quests"][id])
 
         elif inpt == "level":
             print(f"Level: {contents["level"]}\nOverall XP: {contents["overall_xp"]}")
@@ -167,5 +168,15 @@ def main():
 def write_contents_to_file(file_path, contents):
     with open(file_path, 'w') as file:
         json.dump(contents, file, indent=4)
+        
+def print_quest(quest_id, quest):
+    print(f"""
+ID: {quest_id}
+Name: {quest['name']}
+XP: {quest['xp']}
+Due: {quest['has_to_be_completed_before']}
+Complete: {quest['complete']}
+Failed: {quest['failed']}
+""")
 
 main()
